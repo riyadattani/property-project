@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Project</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="/static/js/htmx.min.js"></script>
+</head>
+<body>
+    <h1>Property Project</h1>
+
+    <button hx-get="/hello-world" hx-target="#response" hx-swap="innerHTML">
+        Hello World
+    </button>
+    <button hx-get="/hello-uk" hx-target="#response" hx-swap="innerHTML">
+        Hello UK
+    </button>
+
+    <div id="response"></div>
+</body>
+</html>
+
