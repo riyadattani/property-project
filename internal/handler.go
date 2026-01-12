@@ -25,17 +25,16 @@ func (h *Handler) IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) HelloWorldHandler(w http.ResponseWriter, r *http.Request) {
 	message := h.greeter.Greet(LocationWorld)
-	tmpl, err := template.ParseFiles(filepath.Join("templates", "partials", "hello_world.html"))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	tmpl.Execute(w, map[string]string{"Message": message})
+	h.renderGreeting(w, message)
 }
 
 func (h *Handler) HelloUKHandler(w http.ResponseWriter, r *http.Request) {
 	message := h.greeter.Greet(LocationUK)
-	tmpl, err := template.ParseFiles(filepath.Join("templates", "partials", "hello_uk.html"))
+	h.renderGreeting(w, message)
+}
+
+func (h *Handler) renderGreeting(w http.ResponseWriter, message string) {
+	tmpl, err := template.ParseFiles(filepath.Join("templates", "partials", "greeting.html"))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
