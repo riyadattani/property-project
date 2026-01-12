@@ -774,17 +774,47 @@ No SPA patterns. No frontend frameworks.
 
 ## Continuous Deployment Mindset
 
-Copilot must assume:
+This project uses **trunk-based development** with continuous deployment.
 
-* Code is deployed **directly to production**
+### Workflow Rules
+
+* **No feature branches** — all work happens on `main`
+* **No pull requests** — commits go directly to `main`
+* **Every commit triggers deployment** — CI runs tests, then deploys to production
+* **Small, frequent commits** — each commit should be deployable
+
+### Copilot Must Assume
+
+* Code is deployed **directly to production** on every push to `main`
 * No separate test or staging environments
-* Feature flags or configuration are preferred over branching
+* Feature flags or configuration are preferred over long-lived branches
 
-All code must be:
+### All Code Must Be
 
-* **Observable** — logs, traces, metrics
+* **Observable** — logs, traces, metrics from day one
 * **Reversible** — feature flags, backward-compatible changes
 * **Safe to deploy incrementally** — no big-bang releases
+* **Tested before commit** — run `go test ./...` locally before pushing
+
+### Before Every Commit
+
+Run all tests locally to minimize pipeline failures:
+
+```bash
+go test ./...
+go vet ./...
+```
+
+Do not commit if tests fail. Fix issues locally first.
+
+### Deployment Pipeline
+
+1. Push to `main`
+2. GitHub Actions runs: `go test`, `go vet`, build verification
+3. On success: automatic deploy to Fly.io
+4. Health check confirms deployment
+
+If CI fails, the commit does not deploy. Fix forward — do not revert unless critical.
 
 ---
 
