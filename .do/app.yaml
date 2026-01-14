@@ -1,5 +1,5 @@
 name: property-project
-region: lon1
+region: lon
 services:
   - name: property-project
     run_command: run-app
