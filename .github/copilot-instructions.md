@@ -811,7 +811,7 @@ Do not commit if tests fail. Fix issues locally first.
 
 1. Push to `main`
 2. GitHub Actions runs: `go test`, `go vet`, build verification
-3. On success: automatic deploy to Fly.io
+3. On success: automatic deploy to DigitalOcean App Platform
 4. Health check confirms deployment
 
 If CI fails, the commit does not deploy. Fix forward — do not revert unless critical.

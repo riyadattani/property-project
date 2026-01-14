@@ -14,14 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Fly.io CLI
-        uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
         with:
-          version: 0.3.50
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Deploy to Fly.io
-        run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-
-
+      - name: Deploy to DigitalOcean
+        run: doctl apps create-deployment ${{ secrets.DIGITALOCEAN_APP_ID }}

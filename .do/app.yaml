@@ -1,0 +1,35 @@
+name: property-project
+region: lon1
+services:
+  - name: property-project
+    run_command: run-app
+    dockerfile_path: /Dockerfile
+    github:
+      repo: riyadattani/property-project
+      branch: main
+      deploy_on_push: false
+    http_port: 8080
+    instance_count: 1
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    health_check:
+      http_path: /health
+      initial_delay_seconds: 10
+      period_seconds: 30
+      timeout_seconds: 5
+      success_threshold: 1
+      failure_threshold: 3
+    envs:
+      - key: PORT
+        value: "8080"
+      - key: ENV
+        value: "production"
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
+ingress:
+  rules:
+    - match:
+        path:
+          prefix: /
+      component:
+        name: property-project
